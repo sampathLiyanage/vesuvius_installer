@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @name         Installer
  * @version      1
@@ -33,15 +33,15 @@ function shn_system_error_check(){
     global $global;
     $error = false;
     if(!is_writable($global['approot'] . '/conf')){
-        add_error("no write access to /conf folder");
+        add_error("no write access to \" /conf \" directory");
         $error = true;
     } 
     if (!is_writable($global['approot'] . '/www')){
-        add_error("no write access to /www folder");
+        add_error("no write access to \" /www \" directory");
         $error = true;
     } 
     if ($error){
-        shn_form_fopen(null, null, array('enctype'=>'enctype="multipart/form-data"', 'req_message' => false));
+        shn_form_fopen2("", null, false);
             shn_form_fsopen("System Configurations");
                 echo "Please modify your system according to the errors above and click recheck to continue installation<br/><br/>";
                 shn_form_submit('Recheck');
@@ -147,10 +147,10 @@ function shn_install_conf() {
             add_confirmation("Wrote sahana.conf successfully.");
         }
         if ( $db_params['db_pass'] == "" ) {
-            $mysql_import_command = "mysql -h {$db_params['db_host']} -u{$db_params['db_user']} {$db_params['db_name']} < {$global['approot']}backups/vesuviusStarterDb_v092.sql";
+            $mysql_import_command = "mysql -h {$db_params['db_host']} -u {$db_params['db_user']} {$db_params['db_name']} < {$global['approot']}backups/vesuviusStarterDb_v092.sql";
         }
         else {
-            $mysql_import_command = "mysql -h {$db_params['db_host']} -u{$db_params['db_user']} -p{$db_params['db_pass']} {$db_params['db_name']} < {$global['approot']}backups/vesuviusStarterDb_v092.sql";
+            $mysql_import_command = "mysql -h {$db_params['db_host']} -u {$db_params['db_user']} -p{$db_params['db_pass']} {$db_params['db_name']} < {$global['approot']}backups/vesuviusStarterDb_v092.sql";
         }
         exec($mysql_import_command, $output = array(), $exit_value);
         if ( $exit_value == 0 ) {
